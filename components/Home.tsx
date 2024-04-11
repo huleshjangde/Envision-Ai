@@ -11,6 +11,7 @@ import gsap from "gsap";
 import { ArrowBigRight } from "lucide-react";
 import Markdown from "markdown-to-jsx";
 import { Skeleton } from "./ui/skeleton";
+import { toast } from "sonner";
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI("AIzaSyAHAHgWkZJmzBv8ug2wlTIqPKGUGG7Xm0g");
@@ -33,14 +34,21 @@ const Home = () => {
     console.log("====================================");
     console.log(prompt);
     console.log("====================================");
-    const result = await model.generateContent(
-      `Your an Hindi Story writer based on image description or imagine, your response should be only story with title do not writre long  : " ${prompt} " `,
-    );
-    const response = await result.response;
+    try {
+      const result = await model.generateContent(
+        `Your an Hindi Story writer based on image description or imagine, your response should be only story with title do not writre long  : " ${prompt} " `,
+      );
+      const response = await result.response;
 
-    const text = response.text();
-    setPending(false);
-    setOutput(text);
+      const text = response.text();
+      setPending(false);
+      setOutput(text);
+      toast.success("Story Generated Successfully");
+    } catch (error) {
+      setPending(false);
+      console.error("Error generating story:", error);
+      toast.error("Failed to generate story. Please try again.");
+    }
   }
 
   useGSAP(() => {
@@ -99,36 +107,43 @@ const Home = () => {
     });
   }, [img]);
   async function query() {
+    toast.info("Generating...");
+    setLoading(true);
     if (hasStory) {
       result();
       setImg("");
 
-      setLoading(true);
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
-        {
-          headers: {
-            Authorization: "Bearer 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",
+      try {
+        const response = await fetch(
+          "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+          {
+            headers: {
+              Authorization: "Bearer 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",
+            },
+            method: "POST",
+            body: JSON.stringify(prompt),
           },
-          method: "POST",
-          body: JSON.stringify(prompt),
-        },
-      );
-      if (response.ok) {
-        // Assuming the response contains image data in blob format
-        const blob = await response.blob();
-        // Create a URL for the blob object
-        const imgUrl = URL.createObjectURL(blob);
-        // Update the state with the image URL
-        setImg(imgUrl);
-        setLoading(false);
-        setImgFileName("downloaded_image.png");
+        );
 
-        console.log("====================================");
-        console.log("image generated");
-        console.log("====================================");
-      } else {
-        console.error("Failed to fetch image");
+        if (response.ok) {
+          const blob = await response.blob();
+          const imgUrl = URL.createObjectURL(blob);
+          setImg(imgUrl);
+          setLoading(false);
+          setImgFileName("downloaded_image.png");
+          toast.success("Image Generated Successfully");
+
+          console.log("====================================");
+          console.log("image generated");
+          console.log("====================================");
+        } else {
+          console.error("Failed to fetch image");
+          toast.error("Failed to fetch image");
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching image:", error);
+        toast.error("Failed to fetch image. Please try again.");
         setLoading(false);
       }
     } else {
@@ -138,31 +153,37 @@ const Home = () => {
       console.log("hello from api");
       console.log("====================================");
       setLoading(true);
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
-        {
-          headers: {
-            Authorization: "Bearer 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",
+      try {
+        const response = await fetch(
+          "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+          {
+            headers: {
+              Authorization: "Bearer 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",
+            },
+            method: "POST",
+            body: JSON.stringify(prompt),
           },
-          method: "POST",
-          body: JSON.stringify(prompt),
-        },
-      );
-      if (response.ok) {
-        // Assuming the response contains image data in blob format
-        const blob = await response.blob();
-        // Create a URL for the blob object
-        const imgUrl = URL.createObjectURL(blob);
-        // Update the state with the image URL
-        setImg(imgUrl);
-        setLoading(false);
-        setImgFileName("downloaded_image.png");
+        );
 
-        console.log("====================================");
-        console.log("image generated");
-        console.log("====================================");
-      } else {
-        console.error("Failed to fetch image");
+        if (response.ok) {
+          const blob = await response.blob();
+          const imgUrl = URL.createObjectURL(blob);
+          setImg(imgUrl);
+          setLoading(false);
+          setImgFileName("downloaded_image.png");
+          toast.success("Image Generated Successfully");
+
+          console.log("====================================");
+          console.log("image generated");
+          console.log("====================================");
+        } else {
+          console.error("Failed to fetch image");
+          toast.error("Failed to fetch image");
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching image:", error);
+        toast.error("Failed to fetch image. Please try again.");
         setLoading(false);
       }
     }
@@ -250,6 +271,7 @@ const Home = () => {
                 With story
               </label>
               <button
+                disabled={loading || prompt.length == 0}
                 className={`${loading ? "animate-pulse bg-black text-white px-4 rounded-md" : ""} hover:scale-105 hover:bg-black hover:text-white hover:rounded-full transition-all ease-linear duration-300`}
                 onClick={query}
               >
