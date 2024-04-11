@@ -33,12 +33,12 @@ const Services: React.FC = () => {
 
   return (
     <>
-      <div className="mx-auto w-full place-items-center grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto w-full flex flex-col mt-10  gap-10   sm:h-[300px] sm:flex-row ">
         {data.map((item, index) => (
           <>
             <div
               key={index}
-              className="flex flex-col items-center space-y-2 relative"
+              className="flex  flex-col   py-1 items-center  relative"
             >
               <ThreeDCardDemo
                 icon={item.icon}
@@ -50,7 +50,7 @@ const Services: React.FC = () => {
                 <Image
                   width={200}
                   height={200}
-                  className="hidden sm:block absolute  top-10 -right-40 "
+                  className="hidden sm:block absolute z-30  top-0 -right-40 "
                   src={"/arr1.svg"}
                   alt={"imagge"}
                 />

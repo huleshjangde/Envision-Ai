@@ -4,7 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <>
-      <footer className="flex  flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-20  border-t">
+      <footer className="flex  flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-2 sm:px-20  border-t">
         <p className="text-xs text-gray-500 dark:text-gray-400">
           © 2024 Envision Tools Inc. All rights reserved.
         </p>

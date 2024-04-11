@@ -17,8 +17,8 @@ const ThreeDCardDemo: React.FC<ThreeDCardProps> = ({
   page,
 }) => {
   return (
-    <CardContainer className="inter-var ">
-      <CardBody className="bg-gray-50 flex justify-center items-center flex-col relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[20rem] h-fit rounded-xl p-6 border  ">
+    <CardContainer className="py-2  ">
+      <CardBody className="bg-gray-50 py-0  flex justify-center items-center flex-col relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[20rem] h-fit rounded-xl p-6 border  ">
         <CardItem
           translateZ="50"
           className="text-xs font-bold text-neutral-600 dark:text-white"
@@ -36,7 +36,7 @@ const ThreeDCardDemo: React.FC<ThreeDCardProps> = ({
         <CardItem
           as="p"
           translateZ="60"
-          className="text-neutral-500 text-xs max-w-sm mt-2 dark:text-neutral-300"
+          className="text-neutral-500 text-xs max-w-sm mt-2 dark:text-neutral-300 line-clamp-2"
         >
           {description}
         </CardItem>

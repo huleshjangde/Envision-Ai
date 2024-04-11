@@ -64,7 +64,7 @@ const Home = () => {
       opacity: 0,
       width: "0px",
       duration: 2,
-      delay: 1,
+      delay: 0,
     });
   }, []);
 
@@ -74,7 +74,7 @@ const Home = () => {
 
       width: "0px",
       duration: 2,
-      delay: 1,
+      delay: 0,
     });
   }, []);
 
@@ -259,24 +259,24 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex gap-4 items-center justify-center overflow-y-auto">
+          <div className="flex flex-col-reverse sm:flex-row gap-4 items-center justify-center overflow-y-auto">
             {pending && (
               <>
                 {" "}
                 <div className="flex flex-col gap-4">
                   <Skeleton className="h-4 w-[250px] bg-gray-500" />
                   <Skeleton className="h-4 w-[350px] bg-gray-500" />
-                  <Skeleton className="h-4 w-[450px] bg-gray-500" />
+                  <Skeleton className="h-4 w-[200px] sm:w-[450px] bg-gray-500" />
                   <Skeleton className="h-4 w-[250px] bg-gray-500" />
                 </div>{" "}
               </>
             )}
-            <div className="w-[1/2] max-h-[600px]">
+            <div className="sm:w-[1/2] w-[80vw] max-h-[600px]">
               <Markdown>{output}</Markdown>
             </div>
 
             {loading && (
-              <Skeleton className="h-[600px] bg-gray-500 w-[600px] rounded-xl" />
+              <Skeleton className="h-[400px] sm:h-[600px]  bg-gray-500 w-[80vw] sm:w-[600px] rounded-xl" />
             )}
             {img && (
               <>
@@ -285,7 +285,7 @@ const Home = () => {
                   id="area"
                   width={600}
                   height={600}
-                  className="rounded-md my-5 shadow-lg w-[500px] h-[500px]  inline-block opacity-[100%]"
+                  className="rounded-md my-5 shadow-lg w-[80vw] sm:w-[500px]  sm:h-[500px]  inline-block opacity-[100%]"
                   src={img}
                   alt={"imagge"}
                 />
