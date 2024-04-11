@@ -259,11 +259,11 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex flex-col-reverse sm:flex-row gap-4 items-center justify-center overflow-y-auto">
+          <div className="flex  w-full sm:w-[75vw] flex-col-reverse sm:flex-row gap-4 sm:gap-4 mb-10  items-center justify-center overflow-y-auto">
             {pending && (
               <>
                 {" "}
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col mx-w-1/2 gap-4">
                   <Skeleton className="h-4 w-[250px] bg-gray-500" />
                   <Skeleton className="h-4 w-[350px] bg-gray-500" />
                   <Skeleton className="h-4 w-[200px] sm:w-[450px] bg-gray-500" />
@@ -271,12 +271,15 @@ const Home = () => {
                 </div>{" "}
               </>
             )}
-            <div className="sm:w-[1/2] w-[80vw] max-h-[600px]">
-              <Markdown>{output}</Markdown>
-            </div>
+
+            {output.length != 0 && (
+              <div className="sm:w-[1/2]  w-[80vw] max-h-[600px]">
+                <Markdown>{output}</Markdown>
+              </div>
+            )}
 
             {loading && (
-              <Skeleton className="h-[400px] sm:h-[600px]  bg-gray-500 w-[80vw] sm:w-[600px] rounded-xl" />
+              <Skeleton className="h-[400px] sm:h-[600px]  bg-gray-500 w-[80vw] sm:w-1/2 rounded-xl" />
             )}
             {img && (
               <>
