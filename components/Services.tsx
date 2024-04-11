@@ -1,48 +1,78 @@
+import React from "react";
+import { HeartPulseIcon, ImageIcon, StoryIcon } from "@/components/Icons"; // Import your icons
 import ThreeDCardDemo from "@/components/ui/Mycard";
-import { HeartPulseIcon, DietPlanIcon, BMIIcon } from "@/components/Icons"; // Import your icons
-
+import Image from "next/image";
+import { artPrompts } from "@/lib/prompts";
 const Services: React.FC = () => {
   const data = [
     {
       icon: <HeartPulseIcon className="h-12 w-12" />,
-      title: "Heart Health Prediction",
-      description: "Receive accurate predictions about your heart health.",
+      title: "Be specific",
+      description: `Detail subjects, shapes, colors, and textures. For example, "a surreal landscape with twisting trees and a bright red sun"`,
       pageTitle: "heart",
     },
     {
-      icon: <BMIIcon className="h-12 w-12" />,
-      title: "BMI Calculator",
-      description:
-        "Calculate your Body Mass Index (BMI) to assess your weight status.",
-      pageTitle: "bmi",
+      icon: <StoryIcon className="h-12 w-12" />,
+      title: "Reference other artworks",
+      description: ` Mention artists or styles you want to emulate, like "a cubist portrait in the style of Picasso."`,
+      pageTitle: "story",
     },
     {
-      icon: <DietPlanIcon className="h-12 w-12" />,
-      title: "Personalized Diet Plan",
-      description:
-        "Get personalized diet plans to support your health and well-being.",
-      pageTitle: "diet",
+      icon: <ImageIcon className="h-12 w-12" />,
+      title: "Suggest mood or emotion",
+      description: `Use phrases like "a melancholy seascape" or "a whimsical still life" to convey feeling.`,
+      pageTitle: "log",
     },
     // {
-    //   icon: <StethoscopeIcon className="h-12 w-12" />,
-    //   title: 'Virtual Health Assistants',
-    //   description: 'AI-powered assistants for personalized care.'
-    // }
+    //   icon: <ImageIcon className="h-5 w-5" />,
+    //   title: "Stay open-ended",
+    //   description: `Use phrases like "with unexpected details" or "suggesting solitude" to allow for creativity.`,
+    //   pageTitle: "log",
+    // },
   ];
 
   return (
-    <div className="mx-auto w-fit place-items-center grid gap-6  sm:grid-cols-2 lg:grid-cols-3">
-      {data.map((item, index) => (
-        <div key={index} className="flex flex-col items-center space-y-2">
-          <ThreeDCardDemo
-            icon={item.icon}
-            title={item.title}
-            description={item.description}
-            page={item.pageTitle}
-          />
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="mx-auto w-full place-items-center grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {data.map((item, index) => (
+          <>
+            <div
+              key={index}
+              className="flex flex-col items-center space-y-2 relative"
+            >
+              <ThreeDCardDemo
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                page={item.pageTitle}
+              />
+              {index < 2 && (
+                <Image
+                  width={200}
+                  height={200}
+                  className="hidden sm:block absolute  top-10 -right-40 "
+                  src={"/arr1.svg"}
+                  alt={"imagge"}
+                />
+              )}
+            </div>
+          </>
+        ))}
+      </div>
+
+      <div className="flex flex-col w-full gap-4 justify-center">
+        {artPrompts.slice(1, 6).map((item, index) => {
+          return (
+            <>
+              {" "}
+              <p className="py-2  hover:bg-black hover:text-white transition-all ease-linear duration-300 px-4 border border-gray-300 rounded-md">
+                {item}
+              </p>{" "}
+            </>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

@@ -75,13 +75,17 @@
   }
 }
 
+body {
+  width: 100vw;
+  box-sizing: border-box;
+}
 .sen strong {
   font-size: 17px;
   margin-top: 15px;
   color: white;
 }
 strong {
-  font-size: 17px;
+  font-size: 20px;
   margin-top: 15px;
   color: rgba(0, 0, 0, 0.552);
 }
